@@ -1,1 +1,7 @@
-<app-navbar></app-navbar>
+<app-navbar [currentPath]="currentPath"></app-navbar>
+
+<main class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+  <router-outlet></router-outlet>
+</main>
+
+<app-footer [currentPath]="currentPath"></app-footer>

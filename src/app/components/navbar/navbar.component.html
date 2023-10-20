@@ -1,13 +1,15 @@
-<div class="bg-white">
+<div class="bg-white" *ngIf="!isLoginOrSignup()">
   <!-- Mobile menu  -->
-  <div class="relative z-40 lg:hidden" role="dialog" aria-modal="true">
+  <div class="relative z-40 lg:hidden" [ngClass]="{'hidden':!menuOpened}" role="dialog" aria-modal="true">
     <!-- Off-canvas menu backdrop, show/hide based on off-canvas menu state.    -->
-    <div class="fixed inset-0 bg-black bg-opacity-25"></div>
+    <div class="fixed inset-0 bg-black bg-opacity-25" [ngClass]="{'hidden':!menuOpened}"></div>
 
     <div class="fixed inset-0 z-40 flex">
       <!-- Off-canvas menu, show/hide based on off-canvas menu state.     -->
-      <div class="relative flex w-full max-w-xs flex-col overflow-y-auto bg-white pb-12 shadow-xl">
-        <div class="flex px-4 pt-5 pb-2">
+      <div
+        class="relative -left-20 transition-all duration-500 flex w-full max-w-xs flex-col overflow-y-auto bg-white pb-12 shadow-xl"
+        [ngClass]="{'menuOff':menuOpened}">
+        <div class="flex px-4 pt-5 pb-2" (click)="toggleMenu()">
           <button type="button" class="-m-2 inline-flex items-center justify-center rounded-md p-2 text-gray-400">
             <span class="sr-only">Close menu</span>
             <!-- Heroicon name: outline/x-mark -->
@@ -19,46 +21,37 @@
         </div>
 
         <!-- Links -->
-        <div class="mt-2">
-          <div class="border-b border-gray-200">
-            <div class="-mb-px flex space-x-8 px-4" aria-orientation="horizontal" role="tablist">
-              <!-- Selected: "text-indigo-600 border-indigo-600", Not Selected: "text-gray-900 border-transparent" -->
-              <button id="tabs-1-tab-1"
-                class="text-gray-900 border-transparent flex-1 whitespace-nowrap border-b-2 py-4 px-1 text-base font-medium"
-                aria-controls="tabs-1-panel-1" role="tab" type="button">Women</button>
-
-              <!-- Selected: "text-indigo-600 border-indigo-600", Not Selected: "text-gray-900 border-transparent" -->
-              <button id="tabs-1-tab-2"
-                class="text-indigo-600 border-indigo-600 flex-1 whitespace-nowrap border-b-2 py-4 px-1 text-base font-medium"
-                aria-controls="tabs-1-panel-2" role="tab" type="button">Men</button>
-            </div>
-          </div>
-
-
-        </div>
-
         <div class="space-y-6 border-t border-gray-200 py-6 px-4">
           <div class="flow-root">
-            <a href="#" class="-m-2 block p-2 font-medium text-gray-900">Company</a>
+            <a routerLink="/products" routerLinkActive="activeLink" class="link">Products</a>
           </div>
 
           <div class="flow-root">
-            <a href="#" class="-m-2 block p-2 font-medium text-gray-900">Stores</a>
+            <a routerLink="/about" routerLinkActive="activeLink" class="link">About</a>
           </div>
         </div>
 
         <div class="space-y-6 border-t border-gray-200 py-6 px-4">
           <div class="flow-root">
-            <a href="#" class="-m-2 block p-2 font-medium text-gray-900">Create an account</a>
+            <a routerLink="/signup" class="link">Create an account</a>
           </div>
           <div class="flow-root">
-            <a href="#" class="-m-2 block p-2 font-medium text-gray-900">Sign in</a>
+            <a routerLink="/login" class="link">Sign in</a>
           </div>
         </div>
 
       </div>
     </div>
   </div>
+
+
+  <!--  -->
+  <!--  -->
+  <!--  -->
+  <!--  -->
+  <!--  -->
+  <!--  -->
+  <!--  -->
 
   <header class="relative">
     <nav aria-label="Top">
@@ -72,9 +65,9 @@
             $100</p>
 
           <div class="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-            <a href="#" class="text-sm font-medium text-white hover:text-gray-100">Create an account</a>
+            <a routerLink="/signup" class="text-sm font-medium text-white hover:text-gray-100">Create an account</a>
             <span class="h-6 w-px bg-gray-600" aria-hidden="true"></span>
-            <a href="#" class="text-sm font-medium text-white hover:text-gray-100">Sign in</a>
+            <a routerLink="/login" class="text-sm font-medium text-white hover:text-gray-100">Sign in</a>
           </div>
         </div>
       </div>
@@ -86,7 +79,7 @@
             <div class="flex h-16 items-center justify-between">
               <!-- Logo (lg+) -->
               <div class="hidden lg:flex lg:items-center">
-                <a href="#">
+                <a routerLink="/">
                   <span class="sr-only">Your Company</span>
                   <img class="h-10 w-auto" src="./assets/logo.png" alt="">
                 </a>
@@ -96,33 +89,11 @@
                 <!-- Mega menus -->
                 <div class="ml-8">
                   <div class="flex h-full justify-center space-x-8">
-                    <div class="flex">
-                      <div class="relative flex">
-                        <!-- Item active: "border-indigo-600 text-indigo-600", Item inactive: "border-transparent text-gray-700 hover:text-gray-800" -->
-                        <button type="button"
-                          class="border-transparent text-gray-700 hover:text-gray-800 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out"
-                          aria-expanded="false">Women</button>
-                      </div>
 
 
-                    </div>
+                    <a routerLink="/products" routerLinkActive=" activeLink" class="link">Products</a>
 
-                    <div class="flex">
-                      <div class="relative flex">
-                        <!-- Item active: "border-indigo-600 text-indigo-600", Item inactive: "border-transparent text-gray-700 hover:text-gray-800" -->
-                        <button type="button"
-                          class="text-indigo-600 border-indigo-600 hover:text-gray-800 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out"
-                          aria-expanded="false">Men</button>
-                      </div>
-
-
-                    </div>
-
-                    <a href="#"
-                      class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">Company</a>
-
-                    <a href="#"
-                      class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">Stores</a>
+                    <a routerLink="/about" routerLinkActive="activeLink" class="link">About</a>
                   </div>
                 </div>
               </div>
@@ -130,7 +101,7 @@
               <!-- Mobile menu and search (lg-) -->
               <div class="flex flex-1 items-center lg:hidden">
                 <!-- Mobile menu toggle, controls the 'mobileMenuOpen' state. -->
-                <button type="button" class="-ml-2 rounded-md bg-white p-2 text-gray-400">
+                <button (click)="toggleMenu()" type="button" class="-ml-2 rounded-md bg-white p-2 text-gray-400">
                   <span class="sr-only">Open menu</span>
                   <!-- Heroicon name: outline/bars-3 -->
                   <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -141,7 +112,7 @@
                 </button>
 
                 <!-- Search -->
-                <a href="#" class="ml-2 p-2 text-gray-400 hover:text-gray-500">
+                <a class="ml-2 p-2 text-gray-400 hover:text-gray-500">
                   <span class="sr-only">Search</span>
                   <!-- Heroicon name: outline/magnifying-glass -->
                   <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -153,16 +124,16 @@
               </div>
 
               <!-- Logo (lg-) -->
-              <a href="#" class="lg:hidden">
+              <a routerLink="/" class="lg:hidden ">
                 <span class="sr-only">Your Company</span>
-                <img src="./assets/logo.png" alt="" class="h-10 w-auto">
+                <img src="./assets/logo.png" alt="" class="h-8 w-auto">
               </a>
 
               <div class="flex flex-1 items-center justify-end">
                 <div class="flex items-center lg:ml-8">
                   <div class="flex space-x-8">
                     <div class="hidden lg:flex">
-                      <a href="#" class="-m-2 p-2 text-gray-400 hover:text-gray-500">
+                      <a class="-m-2 p-2 text-gray-400 hover:text-gray-500">
                         <span class="sr-only">Search</span>
                         <!-- Heroicon name: outline/magnifying-glass -->
                         <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -174,7 +145,7 @@
                     </div>
 
                     <div class="flex">
-                      <a href="#" class="-m-2 p-2 text-gray-400 hover:text-gray-500">
+                      <a routerLink="/profile" class="-m-2 p-2 text-gray-400 hover:text-gray-500">
                         <span class="sr-only">Account</span>
                         <!-- Heroicon name: outline/user -->
                         <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -189,7 +160,7 @@
                   <span class="mx-4 h-6 w-px bg-gray-200 lg:mx-6" aria-hidden="true"></span>
 
                   <div class="flow-root">
-                    <a href="#" class="group -m-2 flex items-center p-2">
+                    <a class="group -m-2 flex items-center p-2">
                       <!-- Heroicon name: outline/shopping-cart -->
                       <svg class="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -210,3 +181,9 @@
     </nav>
   </header>
 </div>
+
+
+
+
+
+<!-- <input type="text" [(ngModel)]="searchValue" class="" placeholder="search for products ..." /> -->
