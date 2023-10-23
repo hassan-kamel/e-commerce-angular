@@ -53,10 +53,10 @@
   <!--  -->
   <!--  -->
 
-  <header class="relative">
+  <header class="relative z-10">
     <nav aria-label="Top">
       <!-- Top navigation -->
-      <div class="bg-gray-900">
+      <div *ngIf="!isLoggedIn()" class="bg-gray-900">
         <div class="mx-auto flex h-10 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <!-- Currency selector -->
 
@@ -129,13 +129,14 @@
                 <img src="./assets/logo.png" alt="" class="h-8 w-auto">
               </a>
 
+
+
               <div class="flex flex-1 items-center justify-end">
                 <div class="flex items-center lg:ml-8">
-                  <div class="flex space-x-8">
+                  <div class="flex items-center space-x-8">
                     <div class="hidden lg:flex">
                       <a class="-m-2 p-2 text-gray-400 hover:text-gray-500">
                         <span class="sr-only">Search</span>
-                        <!-- Heroicon name: outline/magnifying-glass -->
                         <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                           stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                           <path stroke-linecap="round" stroke-linejoin="round"
@@ -144,16 +145,58 @@
                       </a>
                     </div>
 
-                    <div class="flex">
-                      <a routerLink="/profile" class="-m-2 p-2 text-gray-400 hover:text-gray-500">
+                    <div *ngIf="userData" class="relative flex">
+
+                      <div class="cursor-pointer" (click)="toggleUserMenu()">
+                        <img *ngIf="userData?.avatar" id="avatarButton" type="button"
+                          class="w-10 h-10 rounded-full cursor-pointer" [src]="userData.avatar" alt="User dropdown">
+                        <span *ngIf="!userData?.avatar">
+                          <svg class="h-6 w-6 stroke-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 24 24" stroke-width="1.5" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                          </svg>
+                        </span>
+                      </div>
+
+                      <!-- Dropdown menu -->
+                      <div [ngClass]="{
+                        '-scale-y-0':!userMenu
+                      }"
+                        class="z-5 transform duration-300 origin-top absolute  top-[150%] right-0 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+                        <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
+                          <div>{{userData.name}}</div>
+                          <div class="font-medium truncate">{{userData.email}}</div>
+                        </div>
+                        <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="avatarButton">
+                          <li>
+                            <a href="#"
+                              class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
+                          </li>
+                          <li>
+                            <a href="#"
+                              class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
+                          </li>
+                          <li>
+                            <a href="#"
+                              class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</a>
+                          </li>
+                        </ul>
+                        <div class="py-1" (click)="doLogOut()">
+                          <a href="#"
+                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign
+                            out</a>
+                        </div>
+                      </div>
+
+                      <!-- <a routerLink="/profile" class="-m-2 p-2 text-gray-400 hover:text-gray-500">
                         <span class="sr-only">Account</span>
-                        <!-- Heroicon name: outline/user -->
                         <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                           stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                           <path stroke-linecap="round" stroke-linejoin="round"
                             d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
                         </svg>
-                      </a>
+                      </a> -->
                     </div>
                   </div>
 
@@ -161,7 +204,6 @@
 
                   <div class="flow-root">
                     <a class="group -m-2 flex items-center p-2">
-                      <!-- Heroicon name: outline/shopping-cart -->
                       <svg class="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" aria-hidden="true">
@@ -174,6 +216,7 @@
                   </div>
                 </div>
               </div>
+
             </div>
           </div>
         </div>

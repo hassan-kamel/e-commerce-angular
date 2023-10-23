@@ -33,12 +33,8 @@ export class CarouselComponent {
     pullDrag: true,
     dots: false,
     navSpeed: 600,
-    navText: [
-      '<div class="absolute top-1/2 left-5 bg-indigo-300 inline-flex justify-center rounded-md border border-transparent bg-grape-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-grape-700 focus:outline-none focus:ring-2 focus:ring-grape-500 focus:ring-offset-2"> Prev </div>',
-      '<div class="absolute top-1/2 right-5 bg-orange-300 inline-flex justify-center rounded-md border border-transparent bg-grape-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-grape-700 focus:outline-none focus:ring-2 focus:ring-grape-500 focus:ring-offset-2"> next </div>',
-    ],
     items: 1,
-    nav: true,
+    nav: false,
     autoplay: true,
   };
 }

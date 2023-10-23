@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-footer',
@@ -6,7 +7,13 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./footer.component.css'],
 })
 export class FooterComponent {
-  @Input() currentPath: string = '';
+  currentPath: string = '';
+
+  constructor(private router: Router) {
+    this.router.events.subscribe((path: any) => {
+      this.currentPath = path?.routerEvent?.url;
+    });
+  }
 
   isLoginOrSignup(): boolean {
     return this.currentPath === '/signup' || this.currentPath === '/login';

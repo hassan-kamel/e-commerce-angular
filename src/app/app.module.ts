@@ -28,16 +28,23 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 //
 import { CarouselModule } from 'ngx-owl-carousel-o';
+import { ToastrModule } from 'ngx-toastr';
+import { ToastComponent } from './components/toast/toast.component';
+import { AuthGuard } from './guards/auth.guard';
+import { loggedGuard } from './guards/logged.guard';
+import { JwtModule } from '@auth0/angular-jwt';
+import { adminGuard } from './guards/admin.guard';
 
 const routes: Route[] = [
   { path: '', component: HomeComponent },
   { path: 'products', component: ProductsComponent },
   { path: 'products/:id', component: ProductDetailsComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'signup', component: SignupComponent },
+  { path: 'login', component: LoginComponent, canActivate: [loggedGuard] },
+  { path: 'signup', component: SignupComponent, canActivate: [loggedGuard] },
   {
     path: 'admin',
     component: AdminComponent,
+    canActivate: [AuthGuard, adminGuard],
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       // { path: 'dashboard', component: AdminDashboardComponent },
@@ -65,6 +72,7 @@ const routes: Route[] = [
     SearchComponent,
     ProductCardComponent,
     CartComponent,
+    ToastComponent,
   ],
   imports: [
     BrowserModule,
@@ -75,6 +83,21 @@ const routes: Route[] = [
 
     RouterModule.forRoot(routes),
     CarouselModule,
+    ToastrModule.forRoot({
+      timeOut: 3000,
+      closeButton: true,
+      enableHtml: true,
+      easing: 'ease',
+      progressBar: true,
+      tapToDismiss: true,
+    }),
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => {
+          return localStorage.getItem('token');
+        },
+      },
+    }),
   ],
   providers: [],
   exports: [],
