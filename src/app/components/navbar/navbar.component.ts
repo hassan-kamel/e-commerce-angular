@@ -23,6 +23,7 @@ export class NavbarComponent {
   ) {
     this.router.events.subscribe((path: any) => {
       this.currentPath = path?.routerEvent?.url;
+      this.menuOpened = false;
     });
     this.authenticationService.userDataObs$.subscribe({
       next: (value) => {

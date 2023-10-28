@@ -1,20 +1,26 @@
 <div class="bg-white" *ngIf="!isLoginOrSignup()">
   <!-- Mobile menu  -->
-  <div class="relative z-40 lg:hidden" [ngClass]="{'hidden':!menuOpened}" role="dialog" aria-modal="true">
-    <!-- Off-canvas menu backdrop, show/hide based on off-canvas menu state.    -->
-    <div class="fixed inset-0 bg-black bg-opacity-25" [ngClass]="{'hidden':!menuOpened}"></div>
+  <div class="relative transition-all ease-linear duration-300"
+    [ngClass]="{'-z-[1] opacity-0':!menuOpened,'z-40 opacity-100':menuOpened}" role="dialog" aria-modal="true">
+    <div class="fixed inset-0 bg-gray-600 bg-opacity-75"></div>
 
-    <div class="fixed inset-0 z-40 flex">
-      <!-- Off-canvas menu, show/hide based on off-canvas menu state.     -->
-      <div
-        class="relative -left-20 transition-all duration-500 flex w-full max-w-xs flex-col overflow-y-auto bg-white pb-12 shadow-xl"
-        [ngClass]="{'menuOff':menuOpened}">
-        <div class="flex px-4 pt-5 pb-2" (click)="toggleMenu()">
-          <button type="button" class="-m-2 inline-flex items-center justify-center rounded-md p-2 text-gray-400">
-            <span class="sr-only">Close menu</span>
-            <!-- Heroicon name: outline/x-mark -->
-            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-              stroke="currentColor" aria-hidden="true">
+    <div class="fixed inset-0 z-40 flex transition ease-in-out duration-300 transform"
+      [ngClass]="{'-translate-x-full':!menuOpened,'translate-x-0':menuOpened}">
+
+      <div class="relative flex w-full max-w-xs flex-1 flex-col bg-white pt-5 pb-4 ease-in-out duration-300"
+        [ngClass]="{'opacity-0':!menuOpened,'opacity-100':menuOpened}">
+
+
+        <div class="flex flex-shrink-0 items-center px-4 my-5">
+          <img class="h-8 w-auto" src="assets/logo.png" alt="Your Company">
+        </div>
+
+        <div class="absolute top-0 right-0 -mr-12 pt-2" (click)="toggleMenu()">
+          <button type="button"
+            class="ml-1 flex h-10 w-10 items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+            <span class="sr-only">Close sidebar</span>
+            <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+              stroke-width="1.5" stroke="currentColor" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
@@ -148,21 +154,12 @@
                     <div *ngIf="userData" class="relative flex">
 
                       <div class="cursor-pointer" (click)="toggleUserMenu()">
-                        <img *ngIf="userData?.avatar" id="avatarButton" type="button"
-                          class="w-10 h-10 rounded-full cursor-pointer" [src]="userData.avatar" alt="User dropdown">
-                        <span *ngIf="!userData?.avatar">
-                          <svg class="h-6 w-6 stroke-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none"
-                            viewBox="0 0 24 24" stroke-width="1.5" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                              d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-                          </svg>
-                        </span>
+                        <img id="avatarButton" type="button" class="w-8 h-8 rounded-full cursor-pointer"
+                          [src]="userData.avatar || 'assets/profile.png' " alt="User dropdown">
                       </div>
 
                       <!-- Dropdown menu -->
-                      <div [ngClass]="{
-                        '-scale-y-0':!userMenu
-                      }"
+                      <div [ngClass]="{'opacity-100 scale-100':userMenu,'opacity-0 scale-50' : !userMenu}"
                         class="z-5 transform duration-300 origin-top absolute  top-[150%] right-0 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
                         <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
                           <div>{{userData.name}}</div>
@@ -170,20 +167,20 @@
                         </div>
                         <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="avatarButton">
                           <li>
-                            <a href="#"
+                            <a routerLink="/admin"
                               class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
                           </li>
                           <li>
-                            <a href="#"
+                            <a routerLink=""
                               class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
                           </li>
                           <li>
-                            <a href="#"
+                            <a routerLink=""
                               class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</a>
                           </li>
                         </ul>
                         <div class="py-1" (click)="doLogOut()">
-                          <a href="#"
+                          <a routerLink=""
                             class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign
                             out</a>
                         </div>

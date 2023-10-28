@@ -4,6 +4,7 @@ import { LoginForm, SignUpForm, User } from '../interfaces/user';
 import { API_URL } from '../constants';
 import { BehaviorSubject } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -17,13 +18,19 @@ export class AuthenticationService {
 
   constructor(
     private httpClient: HttpClient,
-    private jwtHelper: JwtHelperService
+    private jwtHelper: JwtHelperService,
+    private router: Router
   ) {
     const storedToken = localStorage.getItem('token');
     if (storedToken) {
       this.token.next(storedToken);
       this.decodeToken();
     }
+    this.tokenObs$.subscribe({
+      next: (token) => {
+        if (!token) router.navigate(['/']);
+      },
+    });
   }
 
   signUp(data: SignUpForm) {
