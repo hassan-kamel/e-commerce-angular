@@ -31,6 +31,10 @@
       class="mt-1 ml-2 text-sm text-red-600">
       name is Required.
     </p>
+    <p *ngIf="categoryForm.controls['name'].errors?.['minlength'] && categoryForm.controls['name'].touched"
+      class="mt-1 ml-2 text-sm text-red-600">
+      name length must be grater than 3 chars
+    </p>
 
 
   </div>
@@ -40,8 +44,13 @@
     <label for="image" class="block text-sm font-medium text-gray-700 mb-2">Image</label>
 
     <label for="file"
-      class=" rounded-md bg-white px-3 py-2 text-md font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Upload</label>
-    <input class="hidden" id="file" type="file">
+      class=" rounded-md bg-white px-3 py-2 text-md font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 inline">Choose
+      Image</label>
+
+    <input (change)="getSelectedImage($event)" class="hidden" id="file" type="file">
+
+    <img *ngIf="!!imageSrc" [src]="imageSrc" alt="new category"
+      class="w-20 h-20 object-cover inline ml-16 rounded-full">
 
   </div>
 

@@ -73,7 +73,7 @@ const routes: Route[] = [
           { path: 'new', component: AddNewCategoryComponent },
           {
             path: 'edit/:id',
-            component: AddNewCategoryComponent,
+            component: EditCategoryComponent,
             data: {
               breadcrumb: {
                 label: 'Edit',

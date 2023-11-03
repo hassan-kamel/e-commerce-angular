@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Category } from '../interfaces/category';
 import { BehaviorSubject } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { API_URL } from '../constants';
+import { AuthenticationService } from './authentication.service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,11 +11,20 @@ import { API_URL } from '../constants';
 export class CategoryService {
   private categories = new BehaviorSubject<Category[] | null>(null);
   categoriesObs$ = this.categories.asObservable();
+  TOKEN: string | null = null;
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(
+    private httpClient: HttpClient,
+    private auth: AuthenticationService
+  ) {
+    this.auth.tokenObs$.subscribe({
+      next: (token) => (this.TOKEN = token),
+    });
+  }
 
-  addNew(category: Category) {
-    return this.httpClient.post(`${API_URL}/category`, category);
+  addNew(category: FormData) {
+    const options = this.getOptions();
+    return this.httpClient.post(`${API_URL}/category`, category, options);
   }
 
   getAll() {
@@ -27,9 +37,26 @@ export class CategoryService {
     });
   }
 
-  getSingle() {}
+  getSingle(id: string) {
+    const options = this.getOptions();
+    return this.httpClient.get(`${API_URL}/category/${id}`, options);
+  }
 
-  update() {}
+  update(id: string, category: FormData) {
+    const options = this.getOptions();
+    return this.httpClient.put(`${API_URL}/category/${id}`, category, options);
+  }
 
-  delete() {}
+  delete(id: string) {
+    const options = this.getOptions();
+    return this.httpClient.delete(`${API_URL}/category/${id}`, options);
+  }
+
+  private getOptions() {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.TOKEN}`,
+    });
+
+    return { headers, contentType: undefined };
+  }
 }
